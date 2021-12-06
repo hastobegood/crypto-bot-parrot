@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  crypto-dca
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  EnvironmentParameter:
+    Type: String
+    Description: Environment where the stack is deployed
+    Default: test
+    AllowedValues:
+      - test
+      - prod
+  TracingParameter:
+    Description: Boolean to enable or disable tracing
+    Type: String
+    Default: false
+  ExchangesSecretNameParameter:
+    Description: Name of the exchanges secret stored in Secrets Manager
+    Type: String
+  ExchangesSecretEncryptionKeyParameter:
+    Description: Encryption key used to encrypt the exchanges secret in Secrets Manager (either a key id 'key/xxx' or an alias 'alias/xxx')
+    Type: String
+    Default: alias/aws/secretsmanager
+
+Conditions:
+  TracingCondition: !Equals [ !Ref TracingParameter, true ]
+
+Mappings:
+  EnvironmentMap:
+    test:
+      Strategy: '{ "exchange": "Binance", "symbol": "BTC#BUSD", "quantity": 50, "assets": [ { "asset": "ETH|BNB", "percentage": 0.50 } ] }'
+      StrategySchedule: cron(0 18 ? * * *)
+    prod:
+      Strategy: '{ "exchange": "Binance", "symbol": "BTC#EUR", "quantity": 25, "assets": [ { "asset": "ETH", "percentage": 0.26 }, { "asset": "ADA|MATIC", "percentage": 0.24 }, { "asset": "AVAX|EGLD|SOL", "percentage": 0.24 } ] }'
+      StrategySchedule: cron(0 18 ? * 1 *)
+
+Globals:
+  Function:
+    Runtime: nodejs14.x
+    MemorySize: 128
+    Timeout: 30
+    AutoPublishAlias: Live
+    Tracing: !If [ TracingCondition, Active, PassThrough ]
+    Environment:
+      Variables:
+        ENV: !Ref EnvironmentParameter
+        REGION: !Ref AWS::Region
+        TRACING: !Ref TracingParameter
+
+Resources:
+  ExecuteStrategyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Execute strategy function
+      CodeUri: dist/webpack/execute-strategy-handler
+      Handler: app.handler
+      ReservedConcurrentExecutions: 1
+      Environment:
+        Variables:
+          EXCHANGES_SECRET_NAME: !Ref ExchangesSecretNameParameter
+          STRATEGY_TABLE_NAME: !Ref StrategyTable
+          STRATEGY: !FindInMap [ EnvironmentMap, !Ref EnvironmentParameter, Strategy ]
+      Events:
+        ScheduleEvent:
+          Type: Schedule
+          Properties:
+            Enabled: true
+            Schedule: !FindInMap [ EnvironmentMap, !Ref EnvironmentParameter, StrategySchedule ]
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${ExchangesSecretNameParameter}*
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - kms:Decrypt
+              Resource: !Sub arn:aws:kms:${AWS::Region}:${AWS::AccountId}:${ExchangesSecretEncryptionKeyParameter}
+        - DynamoDBReadPolicy:
+            TableName: !Ref StrategyTable
+        - DynamoDBWritePolicy:
+            TableName: !Ref StrategyTable
+
+  StrategyTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        SSEEnabled: true
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+
+Outputs:
+  ExecuteStrategyFunctionName:
+    Description: Execute strategy function name
+    Value: !Ref ExecuteStrategyFunction
+  ExecuteStrategyFunctionArn:
+    Description: Execute strategy function ARN
+    Value: !GetAtt ExecuteStrategyFunction.Arn
+
+  StrategyTableName:
+    Description: Strategy table name
+    Value: !Ref StrategyTable
+  StrategyTableArn:
+    Description: Strategy table ARN
+    Value: !GetAtt StrategyTable.Arn
