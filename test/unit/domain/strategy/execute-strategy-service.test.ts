@@ -80,18 +80,22 @@ describe('ExecuteStrategyService', () => {
       let assetOrder2: Order;
 
       describe('And one or more asset orders are not a success', () => {
-        beforeEach(() => {});
-
-        it('Then unsuccessful strategy execution is returned', () => {});
+        it('Then unsuccessful strategy execution is returned', () => {
+          // TODO
+        });
       });
 
       describe('And all asset orders are a success', () => {
-        it('Then successful strategy execution is returned', () => {});
+        it('Then successful strategy execution is returned', () => {
+          // TODO
+        });
       });
     });
 
     describe('When last strategy execution is not null', () => {
-      it('Then next asset is chosen', async () => {});
+      it('Then next asset is chosen', async () => {
+        // TODO
+      });
     });
   });
 });
