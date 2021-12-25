@@ -45,7 +45,10 @@ const config: Configuration = {
 
   plugins: [
     new CopyPlugin({
-      patterns: Object.keys(handlers).map((handler) => ({ from: '../package-empty.json', to: `${handler}/package.json` })),
+      patterns: Object.keys(handlers).map((handler) => ({
+        from: '../package-empty.json',
+        to: `${handler}/package.json`,
+      })),
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'disabled',

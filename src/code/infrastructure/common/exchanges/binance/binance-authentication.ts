@@ -11,15 +11,19 @@ export class BinanceAuthentication {
     return (await this.#getSecrets()).binance.apiUrl;
   }
 
+  async getApiKey(): Promise<string> {
+    return (await this.#getSecrets()).binance.apiKey;
+  }
+
+  async getSecretKey(): Promise<string> {
+    return (await this.#getSecrets()).binance.secretKey;
+  }
+
   async getSignature(parameters: string): Promise<string> {
-    const hmac = crypto.createHmac('sha256', (await this.#getSecrets()).binance.secretKey);
+    const hmac = crypto.createHmac('sha256', await this.getSecretKey());
     const result = hmac.update(parameters);
 
     return result.digest('hex');
-  }
-
-  async getApiKey(): Promise<string> {
-    return (await this.#getSecrets()).binance.apiKey;
   }
 
   async #getSecrets(): Promise<BinanceSecrets> {
