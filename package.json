@@ -20,7 +20,7 @@
     "deploy:prod": "sam build && sam deploy --config-env prod"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.43.0",
+    "@aws-sdk/client-dynamodb": "^3.45.0",
     "@aws-sdk/client-secrets-manager": "^3.43.0",
     "@aws-sdk/lib-dynamodb": "^3.43.0",
     "@hastobegood/crypto-clients-binance": "^0.1.0",
@@ -32,7 +32,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.87",
+    "@types/aws-lambda": "^8.10.88",
     "@types/copy-webpack-plugin": "^8.0.1",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.0.3",
@@ -43,14 +43,14 @@
     "@types/uuid": "^8.3.3",
     "@types/webpack-bundle-analyzer": "^4.4.1",
     "@types/webpack-node-externals": "^2.5.3",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
     "copy-webpack-plugin": "^10.1.0",
-    "eslint": "^8.4.1",
+    "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "fs-extra": "^10.0.0",
-    "jest": "^27.4.4",
+    "jest": "^27.4.5",
     "jest-sonar-reporter": "^2.0.0",
     "mockdate": "^3.0.5",
     "prettier": "^2.4.1",
