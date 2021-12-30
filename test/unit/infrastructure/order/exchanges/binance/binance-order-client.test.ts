@@ -1,37 +1,22 @@
-import { axiosInstance } from '../../../../../../src/code/configuration/http/axios';
 import { mocked } from 'ts-jest/utils';
-import { BinanceOrderClient } from '../../../../../../src/code/infrastructure/order/exchanges/binance/binance-order-client';
-import { BinanceAuthentication } from '../../../../../../src/code/infrastructure/common/exchanges/binance/binance-authentication';
-import { OrderType, TransientOrder } from '../../../../../../src/code/domain/order/model/order';
-import { buildDefaultCreateMarketOrder, buildDefaultOrder } from '../../../../../builders/domain/order/order-test-builder';
-import { BinanceOrder } from '../../../../../../src/code/infrastructure/common/exchanges/binance/model/binance-order';
-import { buildDefaultBinanceMarketOrder } from '../../../../../builders/infrastructure/common/exchanges/binance/binance-order-test-builder';
-import { fromBinanceOrderStatus, toBinanceOrderSide, toBinanceSymbol } from '../../../../../../src/code/infrastructure/common/exchanges/binance/binance-converter';
 import { round } from '../../../../../../src/code/configuration/util/math';
-import MockDate from 'mockdate';
+import { fromBinanceOrderStatus, toBinanceOrderSide, toBinanceOrderType, toBinanceSymbol } from '../../../../../../src/code/infrastructure/common/exchanges/binance/binance-converter';
+import { buildDefaultCreateMarketOrder, buildDefaultOrder } from '../../../../../builders/domain/order/order-test-builder';
+import { buildDefaultBinanceSendMarketOrderOutput } from '../../../../../builders/infrastructure/common/exchanges/binance/binance-order-test-builder';
+import { OrderType, TransientOrder } from '../../../../../../src/code/domain/order/model/order';
+import { Client, SendOrderOutput } from '@hastobegood/crypto-clients-binance';
+import { BinanceOrderClient } from '../../../../../../src/code/infrastructure/order/exchanges/binance/binance-order-client';
 
-jest.mock('../../../../../../src/code/configuration/http/axios');
-
-const axiosInstanceMock = mocked(axiosInstance, true);
-const binanceAuthenticationMock = mocked(jest.genMockFromModule<BinanceAuthentication>('../../../../../../src/code/infrastructure/common/exchanges/binance/binance-authentication'), true);
+const clientMock = mocked(jest.genMockFromModule<Client>('@hastobegood/crypto-clients-binance'), true);
 
 let binanceOrderClient: BinanceOrderClient;
 beforeEach(() => {
-  binanceAuthenticationMock.getApiUrl = jest.fn();
-  binanceAuthenticationMock.getSignature = jest.fn();
-  binanceAuthenticationMock.getApiKey = jest.fn();
+  clientMock.send = jest.fn();
 
-  binanceOrderClient = new BinanceOrderClient(binanceAuthenticationMock);
+  binanceOrderClient = new BinanceOrderClient(clientMock);
 });
 
 describe('BinanceOrderClient', () => {
-  let date: Date;
-
-  beforeEach(() => {
-    date = new Date('2021-09-17T00:00:11.666Z');
-    MockDate.set(date);
-  });
-
   describe('Given the exchange to retrieve', () => {
     it('Then Binance exchange is returned', async () => {
       expect(binanceOrderClient.getExchange()).toEqual('Binance');
@@ -54,33 +39,28 @@ describe('BinanceOrderClient', () => {
           expect((error as Error).message).toEqual("Unsupported 'Unknown' Binance order type");
         }
 
-        expect(binanceAuthenticationMock.getApiUrl).toHaveBeenCalledTimes(0);
-        expect(binanceAuthenticationMock.getSignature).toHaveBeenCalledTimes(0);
-        expect(binanceAuthenticationMock.getApiKey).toHaveBeenCalledTimes(0);
-        expect(axiosInstanceMock.post).toHaveBeenCalledTimes(0);
+        expect(clientMock.send).toHaveBeenCalledTimes(0);
       });
     });
   });
 
   describe('Given a transient market order to send', () => {
     let transientOrder: TransientOrder;
-    let binanceOrder: BinanceOrder;
+    let sendOrderOutput: SendOrderOutput;
 
     beforeEach(() => {
-      binanceAuthenticationMock.getApiUrl.mockResolvedValueOnce('my-url');
-      binanceAuthenticationMock.getSignature.mockResolvedValueOnce('my-signature');
-      binanceAuthenticationMock.getApiKey.mockResolvedValueOnce('my-api-key');
-
       transientOrder = {
         ...buildDefaultCreateMarketOrder(),
         id: '123',
         status: 'Waiting',
         creationDate: new Date(),
       };
-      binanceOrder = buildDefaultBinanceMarketOrder();
+      sendOrderOutput = buildDefaultBinanceSendMarketOrderOutput();
 
-      axiosInstanceMock.post.mockResolvedValueOnce({
-        data: binanceOrder,
+      clientMock.send.mockResolvedValueOnce({
+        status: 200,
+        headers: {},
+        data: sendOrderOutput,
       });
     });
 
@@ -89,38 +69,23 @@ describe('BinanceOrderClient', () => {
         const result = await binanceOrderClient.sendOrder(transientOrder);
         expect(result).toEqual({
           ...transientOrder,
-          status: fromBinanceOrderStatus(binanceOrder.status),
-          externalId: binanceOrder.orderId.toString(),
-          externalStatus: binanceOrder.status,
-          transactionDate: new Date(binanceOrder.transactTime),
-          executedQuantity: round(+binanceOrder.executedQty, 15),
-          executedPrice: round(+binanceOrder.cummulativeQuoteQty / +binanceOrder.executedQty, 15),
+          status: fromBinanceOrderStatus(sendOrderOutput.status),
+          externalId: sendOrderOutput.orderId.toString(),
+          externalStatus: sendOrderOutput.status,
+          transactionDate: new Date(sendOrderOutput.transactTime),
+          executedQuantity: round(+sendOrderOutput.executedQty, 15),
+          executedPrice: round(+sendOrderOutput.cummulativeQuoteQty / +sendOrderOutput.executedQty, 15),
         });
 
-        const queryParameters = `symbol=${toBinanceSymbol(transientOrder.symbol)}&side=${toBinanceOrderSide(transientOrder.side)}&type=MARKET&quoteOrderQty=${transientOrder.requestedQuantity}&newOrderRespType=FULL&timestamp=${date.valueOf()}`;
-
-        expect(binanceAuthenticationMock.getApiUrl).toHaveBeenCalledTimes(1);
-        const getApiUrlParams = binanceAuthenticationMock.getApiUrl.mock.calls[0];
-        expect(getApiUrlParams.length).toEqual(0);
-
-        expect(binanceAuthenticationMock.getSignature).toHaveBeenCalledTimes(1);
-        const getSignatureParams = binanceAuthenticationMock.getSignature.mock.calls[0];
-        expect(getSignatureParams.length).toEqual(1);
-        expect(getSignatureParams[0]).toEqual(queryParameters);
-
-        expect(binanceAuthenticationMock.getApiKey).toHaveBeenCalledTimes(1);
-        const getApiKeyParams = binanceAuthenticationMock.getApiKey.mock.calls[0];
-        expect(getApiKeyParams.length).toEqual(0);
-
-        expect(axiosInstanceMock.post).toHaveBeenCalledTimes(1);
-        const postParams = axiosInstanceMock.post.mock.calls[0];
-        expect(postParams.length).toEqual(3);
-        expect(postParams[0]).toEqual(`/v3/order?${queryParameters}&signature=my-signature`);
-        expect(postParams[1]).toEqual(null);
-        expect(postParams[2]).toEqual({
-          baseURL: 'my-url',
-          headers: {
-            'X-MBX-APIKEY': 'my-api-key',
+        expect(clientMock.send).toHaveBeenCalledTimes(1);
+        const sendParams = clientMock.send.mock.calls[0];
+        expect(sendParams.length).toEqual(1);
+        expect(sendParams[0]).toEqual({
+          input: {
+            symbol: toBinanceSymbol(transientOrder.symbol),
+            side: toBinanceOrderSide(transientOrder.side),
+            type: toBinanceOrderType(transientOrder.type),
+            quoteOrderQty: transientOrder.requestedQuantity,
           },
         });
       });

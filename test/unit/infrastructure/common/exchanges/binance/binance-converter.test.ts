@@ -1,5 +1,5 @@
 import { fromBinanceOrderStatus, toBinanceOrderSide, toBinanceOrderType, toBinanceSymbol } from '../../../../../../src/code/infrastructure/common/exchanges/binance/binance-converter';
-import { BinanceOrderStatus } from '../../../../../../src/code/infrastructure/common/exchanges/binance/model/binance-order';
+import { OrderStatus as BinanceOrderStatus } from '@hastobegood/crypto-clients-binance/order';
 import { OrderSide, OrderType } from '../../../../../../src/code/domain/order/model/order';
 
 describe('BinanceConverter', () => {

@@ -4,7 +4,7 @@ import { smClient } from '../code/configuration/aws/secrets-manager';
 import { ddbClient } from '../code/configuration/aws/dynamodb';
 import { handleEvent } from './handler-utils';
 import { BinanceAuthentication } from '../code/infrastructure/common/exchanges/binance/binance-authentication';
-import { BinanceExchangeInfoClient } from '@hastobegood/crypto-clients-binance/exchange-info';
+import { Client } from '@hastobegood/crypto-clients-binance';
 import { BinanceTickerClient } from '../code/infrastructure/ticker/exchanges/binance/binance-ticker-client';
 import { HttpTickerClient } from '../code/infrastructure/ticker/http-ticker-client';
 import { GetTickerService } from '../code/domain/ticker/get-ticker-service';
@@ -19,13 +19,13 @@ import { ExecuteStrategyService } from '../code/domain/strategy/execute-strategy
 import { ExecuteStrategyEventScheduler } from '../code/application/strategy/execute-strategy-event-scheduler';
 
 const binanceAuthentication = new BinanceAuthentication(process.env.EXCHANGES_SECRET_NAME, smClient);
-const binanceExchangeInfoClient = new BinanceExchangeInfoClient(binanceAuthentication);
+const binanceClient = new Client(binanceAuthentication);
 
-const binanceTickerClient = new BinanceTickerClient(binanceExchangeInfoClient);
+const binanceTickerClient = new BinanceTickerClient(binanceClient);
 const tickerClient = new HttpTickerClient([binanceTickerClient]);
 const getTickerService = new GetTickerService(tickerClient);
 
-const binanceOrderClient = new BinanceOrderClient(binanceAuthentication);
+const binanceOrderClient = new BinanceOrderClient(binanceClient);
 const orderClient = new HttpOrderClient([binanceOrderClient]);
 const createOrderService = new CreateOrderService(getTickerService, orderClient);
 

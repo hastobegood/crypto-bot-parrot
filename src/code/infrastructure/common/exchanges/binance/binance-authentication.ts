@@ -1,6 +1,13 @@
 import { GetSecretValueCommand, GetSecretValueCommandInput, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { BinanceSecrets } from './model/binance-secret';
 import crypto from 'crypto';
+
+interface BinanceSecrets {
+  binance: {
+    apiUrl: string;
+    apiKey: string;
+    secretKey: string;
+  };
+}
 
 export class BinanceAuthentication {
   private secrets?: BinanceSecrets;

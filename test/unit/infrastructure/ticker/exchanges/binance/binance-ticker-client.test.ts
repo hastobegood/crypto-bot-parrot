@@ -1,15 +1,15 @@
 import { mocked } from 'ts-jest/utils';
-import { buildDefaultBinanceExchangeInfo } from '../../../../../builders/infrastructure/common/exchanges/binance/binance-exchange-info-test-builder';
-import { BinanceExchangeInfo, BinanceExchangeInfoClient } from '@hastobegood/crypto-clients-binance/exchange-info';
+import { buildDefaultBinanceGetExchangeInfoOutput } from '../../../../../builders/infrastructure/common/exchanges/binance/binance-ticker-test-builder';
+import { Client, GetExchangeInfoOutput } from '@hastobegood/crypto-clients-binance';
 import { BinanceTickerClient } from '../../../../../../src/code/infrastructure/ticker/exchanges/binance/binance-ticker-client';
 
-const binanceExchangeInfoClientMock = mocked(jest.genMockFromModule<BinanceExchangeInfoClient>('@hastobegood/crypto-clients-binance'), true);
+const clientMock = mocked(jest.genMockFromModule<Client>('@hastobegood/crypto-clients-binance'), true);
 
 let binanceTickerClient: BinanceTickerClient;
 beforeEach(() => {
-  binanceExchangeInfoClientMock.getExchangeInfoBySymbol = jest.fn();
+  clientMock.send = jest.fn();
 
-  binanceTickerClient = new BinanceTickerClient(binanceExchangeInfoClientMock);
+  binanceTickerClient = new BinanceTickerClient(clientMock);
 });
 
 describe('BinanceTickerClient', () => {
@@ -20,16 +20,16 @@ describe('BinanceTickerClient', () => {
   });
 
   describe('Given a ticker to retrieve by its symbol', () => {
-    let binanceExchangeInfo: BinanceExchangeInfo;
+    let getExchangeInfoOutput: GetExchangeInfoOutput;
 
     describe('When ticker is found', () => {
       beforeEach(() => {
-        binanceExchangeInfo = buildDefaultBinanceExchangeInfo();
+        getExchangeInfoOutput = buildDefaultBinanceGetExchangeInfoOutput();
 
-        binanceExchangeInfoClientMock.getExchangeInfoBySymbol.mockResolvedValueOnce({
+        clientMock.send.mockResolvedValueOnce({
           status: 200,
           headers: {},
-          data: binanceExchangeInfo,
+          data: getExchangeInfoOutput,
         });
       });
 
@@ -38,13 +38,17 @@ describe('BinanceTickerClient', () => {
         expect(result).toEqual({
           exchange: 'Binance',
           symbol: 'ABC#DEF',
-          quoteAssetPrecision: binanceExchangeInfo.symbols[0].quoteAssetPrecision,
+          quoteAssetPrecision: getExchangeInfoOutput.symbols[0].quoteAssetPrecision,
         });
 
-        expect(binanceExchangeInfoClientMock.getExchangeInfoBySymbol).toHaveBeenCalledTimes(1);
-        const getExchangeInfoBySymbolParams = binanceExchangeInfoClientMock.getExchangeInfoBySymbol.mock.calls[0];
-        expect(getExchangeInfoBySymbolParams.length).toEqual(1);
-        expect(getExchangeInfoBySymbolParams[0]).toEqual('ABCDEF');
+        expect(clientMock.send).toHaveBeenCalledTimes(1);
+        const sendParams = clientMock.send.mock.calls[0];
+        expect(sendParams.length).toEqual(1);
+        expect(sendParams[0]).toEqual({
+          input: {
+            symbol: 'ABCDEF',
+          },
+        });
       });
     });
   });

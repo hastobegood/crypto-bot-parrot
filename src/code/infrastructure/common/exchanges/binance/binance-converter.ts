@@ -1,5 +1,5 @@
 import { extractAssets } from '../../../../configuration/util/symbol';
-import { BinanceOrderSide, BinanceOrderStatus, BinanceOrderType } from './model/binance-order';
+import { OrderSide as BinanceOrderSide, OrderStatus as BinanceOrderStatus, OrderType as BinanceOrderType } from '@hastobegood/crypto-clients-binance';
 import { OrderSide, OrderStatus, OrderType } from '../../../../domain/order/model/order';
 
 export const toBinanceSymbol = (symbol: string): string => {
