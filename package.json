@@ -22,7 +22,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.45.0",
     "@aws-sdk/client-secrets-manager": "^3.43.0",
-    "@aws-sdk/lib-dynamodb": "^3.43.0",
+    "@aws-sdk/lib-dynamodb": "^3.46.0",
     "@hastobegood/crypto-clients-binance": "^0.2.1",
     "aws-xray-sdk-core": "^3.3.4",
     "lodash": "^4.17.21",
