@@ -480,12 +480,12 @@
   dependencies:
     tslib "^2.3.0"
 
-"@aws-sdk/lib-dynamodb@^3.43.0":
-  version "3.44.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/lib-dynamodb/-/lib-dynamodb-3.44.0.tgz#a584de36d52d592b941b5e11468a846f56b8e37c"
-  integrity sha512-e6hY61BmgIQz89ha0AgB/mT0cdLlLnnChOkLmbOeOd0rdCx7t2v8DC6XKO7Ln/Ryzu+PctQVzS1oPrLJ/e2YgA==
+"@aws-sdk/lib-dynamodb@^3.46.0":
+  version "3.46.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/lib-dynamodb/-/lib-dynamodb-3.46.0.tgz#4aedbc8e819f1dc62a3ab37adbbd06d4409711ab"
+  integrity sha512-E182419VqQZPQBR9MLXEihI+IbWAx6j5Kgrfe7LoMXULRisFcFmgOUK4n+UenJ+Jz7+7qlhlUe9uaeCMimmLPQ==
   dependencies:
-    "@aws-sdk/util-dynamodb" "3.44.0"
+    "@aws-sdk/util-dynamodb" "3.46.0"
     tslib "^2.3.0"
 
 "@aws-sdk/middleware-content-length@3.40.0":
@@ -769,10 +769,10 @@
     "@aws-sdk/shared-ini-file-loader" "3.37.0"
     tslib "^2.3.0"
 
-"@aws-sdk/util-dynamodb@3.44.0":
-  version "3.44.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.44.0.tgz#e45a4fadf717353703c3584d618488de42c0b561"
-  integrity sha512-bGVjJDg1CjiUJshqcHu+FRwMucE4T/Dym9VrwGIor6CRDw2YfhnP9JADXpHDQ4+MHdivgekdj577fGmjsRY1tQ==
+"@aws-sdk/util-dynamodb@3.46.0":
+  version "3.46.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.46.0.tgz#537351dfba44c0df80478944d1ea083ac119a14d"
+  integrity sha512-2gUcLDPrHm0gmF8nv3b9apRa/kjhiV+vrzPPcOMlzLY5IAcCTxgoy4v3hwt0+Kn4rHVtsqgwsbNGy+B+dHpGng==
   dependencies:
     tslib "^2.3.0"
 
@@ -1171,10 +1171,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@hastobegood/crypto-clients-binance@^0.1.0":
-  version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@hastobegood/crypto-clients-binance/0.1.0/31c815974c7d68d1fbaf678ad99413815281bfcc7a4aa0adbb9e1b3a5c133a03#f66f300d42b0c12f3840642bf474dbf069e055bf"
-  integrity sha512-VYnqSJOr9ad89JQ3cYifJEyhkE3GugEqgTxj26A5cQpRrWDc3H5s5aXMYZldibs1Wre3wwHoXF1Jb9v9JEFmJw==
+"@hastobegood/crypto-clients-binance@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@hastobegood/crypto-clients-binance/-/crypto-clients-binance-0.2.1.tgz#d22839c87f9cb4a3bb8fa31c70305946061973ee"
+  integrity sha512-D447zPyR44lnS/eB/Ha3oEqcFvpijS+oFLCvoxRo5zMZkGY1pk2OnWkMJ2P2kSozrQo9mpvORYT42AoB6ktJug==
   dependencies:
     axios "^0.24.0"
 
@@ -1550,10 +1550,10 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^27.0.3":
-  version "27.0.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.0.3.tgz#0cf9dfe9009e467f70a342f0f94ead19842a783a"
-  integrity sha512-cmmwv9t7gBYt7hNKH5Spu7Kuu/DotGa+Ff+JGRKZ4db5eh8PnKS4LuebJ3YLUoyOyIHraTGyULn23YtEAm0VSg==
+"@types/jest@^27.4.0":
+  version "27.4.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.0.tgz#037ab8b872067cae842a320841693080f9cb84ed"
+  integrity sha512-gHl8XuC1RZ8H2j5sHv/JqsaxXkDDM9iDOgu0Wp8sjs4u/snb2PVehyWXJPr+ORA0RPpgw231mnutWI1+0hgjIQ==
   dependencies:
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
@@ -4597,10 +4597,10 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
-ts-jest@^27.1.1:
-  version "27.1.1"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.1.1.tgz#5a54aca96db1dac37c681f3029dd10f3a8c36192"
-  integrity sha512-Ds0VkB+cB+8g2JUmP/GKWndeZcCKrbe6jzolGrVWdqVUFByY/2KDHqxJ7yBSon7hDB1TA4PXxjfZ+JjzJisvgA==
+ts-jest@^27.1.2:
+  version "27.1.2"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.1.2.tgz#5991d6eb3fd8e1a8d4b8f6de3ec0a3cc567f3151"
+  integrity sha512-eSOiJOWq6Hhs6Khzk5wKC5sgWIXgXqOCiIl1+3lfnearu58Hj4QpE5tUhQcA3xtZrELbcvAGCsd6HB8OsaVaTA==
   dependencies:
     bs-logger "0.x"
     fast-json-stable-stringify "2.x"
@@ -4621,7 +4621,7 @@ ts-loader@^9.2.6:
     micromatch "^4.0.0"
     semver "^7.3.4"
 
-ts-node@^10.3.0:
+ts-node@^10.4.0:
   version "10.4.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.4.0.tgz#680f88945885f4e6cf450e7f0d6223dd404895f7"
   integrity sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==
@@ -4692,10 +4692,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.5.3:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.3.tgz#afaa858e68c7103317d89eb90c5d8906268d353c"
-  integrity sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==
+typescript@^4.5.4:
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.4.tgz#a17d3a0263bf5c8723b9c52f43c5084edf13c2e8"
+  integrity sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==
 
 universalify@^0.1.2:
   version "0.1.2"
