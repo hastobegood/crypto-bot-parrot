@@ -63,4 +63,30 @@ describe('BinanceAuthentication', () => {
       });
     });
   });
+
+  describe('Give the secret key to retrieve', () => {
+    describe('When multiple requests', () => {
+      beforeEach(() => {
+        smClientMock.send.mockImplementation(() => ({
+          SecretString: '{"binance": {"secretKey": "my-secret-key"}}',
+        }));
+      });
+
+      it('Then same secret key is always returned', async () => {
+        let result = await binanceAuthentication.getSecretKey();
+        expect(result).toEqual('my-secret-key');
+        result = await binanceAuthentication.getSecretKey();
+        expect(result).toEqual('my-secret-key');
+        result = await binanceAuthentication.getSecretKey();
+        expect(result).toEqual('my-secret-key');
+
+        expect(smClientMock.send).toHaveBeenCalledTimes(1);
+        const sendParams = smClientMock.send.mock.calls[0];
+        expect(sendParams.length).toEqual(1);
+        expect(sendParams[0].input).toEqual({
+          SecretId: 'my-secrets',
+        });
+      });
+    });
+  });
 });
