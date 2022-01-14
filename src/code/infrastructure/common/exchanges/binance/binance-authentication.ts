@@ -1,5 +1,4 @@
 import { GetSecretValueCommand, GetSecretValueCommandInput, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import crypto from 'crypto';
 
 interface BinanceSecrets {
   binance: {
@@ -24,13 +23,6 @@ export class BinanceAuthentication {
 
   async getSecretKey(): Promise<string> {
     return (await this.#getSecrets()).binance.secretKey;
-  }
-
-  async getSignature(parameters: string): Promise<string> {
-    const hmac = crypto.createHmac('sha256', await this.getSecretKey());
-    const result = hmac.update(parameters);
-
-    return result.digest('hex');
   }
 
   async #getSecrets(): Promise<BinanceSecrets> {
