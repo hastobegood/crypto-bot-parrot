@@ -1,11 +1,10 @@
-import { mocked } from 'ts-jest/utils';
 import { StrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
 import { buildDefaultStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
 import { ExecuteStrategyService } from '../../../../src/code/domain/strategy/execute-strategy-service';
 import { buildDefaultStrategy } from '../../../builders/domain/strategy/strategy-test-builder';
 import { ExecuteStrategyEventScheduler } from '../../../../src/code/application/strategy/execute-strategy-event-scheduler';
 
-const executeStrategyServiceMock = mocked(jest.genMockFromModule<ExecuteStrategyService>('../../../../src/code/domain/strategy/execute-strategy-service'), true);
+const executeStrategyServiceMock = jest.mocked(jest.genMockFromModule<ExecuteStrategyService>('../../../../src/code/domain/strategy/execute-strategy-service'), true);
 const strategy = buildDefaultStrategy();
 
 let executeStrategyEventScheduler: ExecuteStrategyEventScheduler;

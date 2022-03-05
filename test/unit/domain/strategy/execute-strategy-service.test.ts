@@ -1,4 +1,4 @@
-import { mocked } from 'ts-jest/utils';
+import { Order } from '@hastobegood/crypto-bot-artillery/order';
 import { GetStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/get-strategy-execution-service';
 import { CreateOrderService } from '../../../../src/code/domain/order/create-order-service';
 import { CreateStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/create-strategy-execution-service';
@@ -7,11 +7,10 @@ import { Strategy } from '../../../../src/code/domain/strategy/model/strategy';
 import { buildDefaultStrategy } from '../../../builders/domain/strategy/strategy-test-builder';
 import { StrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
 import { buildDefaultStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
-import { Order } from '../../../../src/code/domain/order/model/order';
 
-const createOrderServiceMock = mocked(jest.genMockFromModule<CreateOrderService>('../../../../src/code/domain/order/create-order-service'), true);
-const getStrategyExecutionServiceMock = mocked(jest.genMockFromModule<GetStrategyExecutionService>('../../../../src/code/domain/strategy-execution/get-strategy-execution-service'), true);
-const createStrategyExecutionServiceMock = mocked(jest.genMockFromModule<CreateStrategyExecutionService>('../../../../src/code/domain/strategy-execution/create-strategy-execution-service'), true);
+const createOrderServiceMock = jest.mocked(jest.genMockFromModule<CreateOrderService>('../../../../src/code/domain/order/create-order-service'), true);
+const getStrategyExecutionServiceMock = jest.mocked(jest.genMockFromModule<GetStrategyExecutionService>('../../../../src/code/domain/strategy-execution/get-strategy-execution-service'), true);
+const createStrategyExecutionServiceMock = jest.mocked(jest.genMockFromModule<CreateStrategyExecutionService>('../../../../src/code/domain/strategy-execution/create-strategy-execution-service'), true);
 
 let executeStrategyService: ExecuteStrategyService;
 beforeEach(() => {
@@ -50,8 +49,6 @@ describe('ExecuteStrategyService', () => {
         expect(createOrderParams[0]).toEqual({
           exchange: strategy.exchange,
           symbol: strategy.symbol,
-          side: 'Buy',
-          type: 'Market',
           requestedQuantity: strategy.quantity,
         });
 

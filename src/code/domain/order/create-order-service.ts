@@ -1,33 +1,28 @@
-import { logger } from '../../configuration/log/logger';
-import { v4 } from 'uuid';
-import { truncate } from '../../configuration/util/math';
-import { GetTickerService } from '../ticker/get-ticker-service';
-import { OrderClient } from './order-client';
-import { CreateOrder, Order, TransientOrder } from './model/order';
+import { logger } from '@hastobegood/crypto-bot-artillery/common';
+import { Order, SendOrder, SendOrderClient } from '@hastobegood/crypto-bot-artillery/order';
+import { CreateOrder } from './model/order';
 
 export class CreateOrderService {
-  constructor(private getTickerService: GetTickerService, private orderClient: OrderClient) {}
+  constructor(private sendOrderClient: SendOrderClient) {}
 
   async create(createOrder: CreateOrder): Promise<Order> {
-    const transientOrder = await this.#buildTransientOrder(createOrder);
+    const sendOrder = await this.#buildSendOrder(createOrder);
 
-    logger.info(transientOrder, 'Create order');
-    const order = await this.orderClient.send(transientOrder);
+    logger.info(sendOrder, 'Create order');
+    const order = await this.sendOrderClient.send(sendOrder);
     logger.info(order, 'Order created');
 
     return order;
   }
 
-  async #buildTransientOrder(createOrder: CreateOrder): Promise<TransientOrder> {
-    const creationDate = new Date();
-    const ticker = await this.getTickerService.getByExchangeAndSymbol(createOrder.exchange, createOrder.symbol);
-
+  #buildSendOrder(createOrder: CreateOrder): SendOrder {
     return {
-      ...createOrder,
-      id: v4(),
-      status: 'Waiting',
-      creationDate: creationDate,
-      requestedQuantity: truncate(createOrder.requestedQuantity, ticker.quoteAssetPrecision),
+      exchange: createOrder.exchange,
+      symbol: createOrder.symbol,
+      side: 'Buy',
+      type: 'Market',
+      quote: true,
+      requestedQuantity: createOrder.requestedQuantity,
     };
   }
 }

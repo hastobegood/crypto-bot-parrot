@@ -1,8 +1,7 @@
-import { mocked } from 'ts-jest/utils';
 import { BinanceAuthentication } from '../../../../../../src/code/infrastructure/common/exchanges/binance/binance-authentication';
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 
-const smClientMock = mocked(jest.genMockFromModule<SecretsManagerClient>('@aws-sdk/client-secrets-manager'), true);
+const smClientMock = jest.mocked(jest.genMockFromModule<SecretsManagerClient>('@aws-sdk/client-secrets-manager'), true);
 
 let binanceAuthentication: BinanceAuthentication;
 beforeEach(() => {

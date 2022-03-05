@@ -1,5 +1,4 @@
 import MockDate from 'mockdate';
-import { mocked } from 'ts-jest/utils';
 import { CreateStrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
 import { buildDefaultCreateStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
 import { StrategyExecutionRepository } from '../../../../src/code/domain/strategy-execution/strategy-execution-repository';
@@ -11,7 +10,7 @@ jest.mock('uuid', () => {
   };
 });
 
-const strategyExecutionRepositoryMock = mocked(jest.genMockFromModule<StrategyExecutionRepository>('../../../../src/code/domain/strategy-execution/strategy-execution-repository'), true);
+const strategyExecutionRepositoryMock = jest.mocked(jest.genMockFromModule<StrategyExecutionRepository>('../../../../src/code/domain/strategy-execution/strategy-execution-repository'), true);
 
 let createStrategyExecutionService: CreateStrategyExecutionService;
 beforeEach(() => {

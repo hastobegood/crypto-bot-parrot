@@ -2,14 +2,11 @@ import 'source-map-support/register';
 import { Context, ScheduledEvent } from 'aws-lambda';
 import { smClient } from '../code/configuration/aws/secrets-manager';
 import { ddbClient } from '../code/configuration/aws/dynamodb';
-import { handleEvent } from './handler-utils';
 import { BinanceAuthentication } from '../code/infrastructure/common/exchanges/binance/binance-authentication';
-import { Client } from '@hastobegood/crypto-clients-binance';
-import { BinanceTickerClient } from '../code/infrastructure/ticker/exchanges/binance/binance-ticker-client';
-import { HttpTickerClient } from '../code/infrastructure/ticker/http-ticker-client';
-import { GetTickerService } from '../code/domain/ticker/get-ticker-service';
-import { BinanceOrderClient } from '../code/infrastructure/order/exchanges/binance/binance-order-client';
-import { HttpOrderClient } from '../code/infrastructure/order/http-order-client';
+import { loadExchangesClients } from '@hastobegood/crypto-bot-artillery';
+import { handleEvent } from '@hastobegood/crypto-bot-artillery/common';
+import { loadSendOrderClient } from '@hastobegood/crypto-bot-artillery/order';
+import { loadFetchTickerClient } from '@hastobegood/crypto-bot-artillery/ticker';
 import { CreateOrderService } from '../code/domain/order/create-order-service';
 import { DdbStrategyExecutionRepository } from '../code/infrastructure/strategy-execution/ddb-strategy-execution-repository';
 import { GetStrategyExecutionService } from '../code/domain/strategy-execution/get-strategy-execution-service';
@@ -19,15 +16,11 @@ import { ExecuteStrategyService } from '../code/domain/strategy/execute-strategy
 import { ExecuteStrategyEventScheduler } from '../code/application/strategy/execute-strategy-event-scheduler';
 
 const binanceAuthentication = new BinanceAuthentication(process.env.EXCHANGES_SECRET_NAME, smClient);
-const binanceClient = new Client({ apiInfoProvider: binanceAuthentication });
+const exchangesClients = loadExchangesClients({ binanceApiInfoProvider: binanceAuthentication });
+const fetchTickerClient = loadFetchTickerClient(exchangesClients);
+const sendOrderClient = loadSendOrderClient(exchangesClients, fetchTickerClient);
 
-const binanceTickerClient = new BinanceTickerClient(binanceClient);
-const tickerClient = new HttpTickerClient([binanceTickerClient]);
-const getTickerService = new GetTickerService(tickerClient);
-
-const binanceOrderClient = new BinanceOrderClient(binanceClient);
-const orderClient = new HttpOrderClient([binanceOrderClient]);
-const createOrderService = new CreateOrderService(getTickerService, orderClient);
+const createOrderService = new CreateOrderService(sendOrderClient);
 
 const strategyExecutionRepository = new DdbStrategyExecutionRepository(process.env.STRATEGY_TABLE_NAME, ddbClient);
 const getStrategyExecutionService = new GetStrategyExecutionService(strategyExecutionRepository);

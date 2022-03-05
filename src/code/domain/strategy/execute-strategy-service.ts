@@ -1,5 +1,6 @@
-import { extractAssets } from '../../configuration/util/symbol';
-import { CreateOrder, Order } from '../order/model/order';
+import { extractAssets } from '@hastobegood/crypto-bot-artillery/common';
+import { Order } from '@hastobegood/crypto-bot-artillery/order';
+import { CreateOrder } from '../order/model/order';
 import { CreateOrderService } from '../order/create-order-service';
 import { CreateStrategyExecution, StrategyExecution, StrategyExecutionOrder } from '../strategy-execution/model/strategy-execution';
 import { GetStrategyExecutionService } from '../strategy-execution/get-strategy-execution-service';
@@ -44,8 +45,6 @@ export class ExecuteStrategyService {
     const createOrder: CreateOrder = {
       exchange: exchange,
       symbol: `${baseAsset}#${quoteAsset}`,
-      side: 'Buy',
-      type: 'Market',
       requestedQuantity: quantity,
     };
 

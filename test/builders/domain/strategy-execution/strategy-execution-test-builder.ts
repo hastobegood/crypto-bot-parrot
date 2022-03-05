@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
+import { randomBoolean, randomNumber, randomString, randomSymbol } from '@hastobegood/crypto-bot-artillery/test/builders';
 import { CreateStrategyExecution, StrategyExecution, StrategyExecutionOrder } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
-import { randomBoolean, randomNumber, randomString, randomSymbol } from '../../random-test-builder';
 
 export const buildDefaultCreateStrategyExecution = (): CreateStrategyExecution => {
   const orders = [buildDefaultStrategyExecutionOrder(), buildDefaultStrategyExecutionOrder(), buildDefaultStrategyExecutionOrder()];
@@ -28,10 +28,10 @@ export const buildDefaultStrategyExecutionOrder = (): StrategyExecutionOrder => 
       success: true,
       symbol: randomSymbol(),
       requestedQuantity: randomNumber(1, 1_000),
-      id: randomString(20),
-      status: randomString(10),
-      externalId: randomString(20),
-      externalStatus: randomString(10),
+      id: randomString(),
+      status: randomString(),
+      externalId: randomString(),
+      externalStatus: randomString(),
       transactionDate: new Date(),
       executedQuantity: randomNumber(1, 1_000),
       executedPrice: randomNumber(1, 100),

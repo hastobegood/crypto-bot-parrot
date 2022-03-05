@@ -1,5 +1,5 @@
+import { randomAsset, randomFromList, randomNumber, randomPercentage, randomSymbol } from '@hastobegood/crypto-bot-artillery/test/builders';
 import { Strategy, StrategyAsset } from '../../../../src/code/domain/strategy/model/strategy';
-import { randomFromList, randomNumber, randomPercentage, randomString, randomSymbol } from '../../random-test-builder';
 
 export const buildDefaultStrategy = (): Strategy => {
   return {
@@ -12,7 +12,7 @@ export const buildDefaultStrategy = (): Strategy => {
 
 export const buildDefaultStrategyAsset = (): StrategyAsset => {
   return {
-    asset: randomString(5),
+    asset: randomAsset(),
     percentage: randomPercentage(),
   };
 };
