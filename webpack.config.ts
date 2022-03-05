@@ -53,7 +53,7 @@ const config: Configuration = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'disabled',
       generateStatsFile: true,
-    }),
+    }) as any,
   ],
 };
 
