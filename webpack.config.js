@@ -1,32 +1,35 @@
-import { Configuration, Entry } from 'webpack';
-import { readdirSync } from 'fs-extra';
-import { resolve } from 'path';
+import { readdirSync } from 'fs';
+import { dirname, resolve } from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-const handlers: Entry = {};
+const handlers = {};
 readdirSync('./src/handlers')
   .filter((file) => file.endsWith('-handler.ts'))
   .forEach(function (handler) {
     handlers[handler.split('.ts')[0]] = './handlers/' + handler;
   });
 
-const config: Configuration = {
+const config = {
   mode: 'production',
-  target: 'node',
+  target: 'node14',
+  externalsPresets: { node: true },
   devtool: 'nosources-source-map',
 
-  context: resolve(__dirname, 'src'),
+  context: resolve(dirname(''), 'src'),
   entry: handlers,
 
-  externals: [
-    'pino-pretty', // https://github.com/pinojs/pino/issues/688
-  ],
+  experiments: {
+    outputModule: true,
+  },
 
   output: {
-    path: resolve(__dirname, 'dist/webpack'),
+    path: resolve(dirname(''), 'dist/webpack'),
     filename: '[name]/app.js',
-    libraryTarget: 'commonjs',
+    library: {
+      type: 'module',
+    },
+    module: true,
     clean: true,
   },
 
@@ -53,7 +56,7 @@ const config: Configuration = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'disabled',
       generateStatsFile: true,
-    }) as any,
+    }),
   ],
 };
 
