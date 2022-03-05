@@ -41,10 +41,73 @@ export const buildDefaultBinanceGetExchangeInfoOutputSymbol = (): GetExchangeInf
 };
 
 export const buildDefaultBinanceGetExchangeInfoOutputSymbolFilter = (): GetExchangeInfoOutputSymbolFilter => {
-  return {
-    filterType: randomString(5),
-    minPrice: randomNumber(1, 100).toString(),
-    maxPrice: randomNumber(1_000, 10_000).toString(),
-    tickSize: randomNumber(1, 4).toString(),
-  };
+  const filterType = randomFromList<'PRICE_FILTER' | 'PERCENT_PRICE' | 'LOT_SIZE' | 'MIN_NOTIONAL' | 'ICEBERG_PARTS' | 'MARKET_LOT_SIZE' | 'MAX_NUM_ORDERS' | 'MAX_NUM_ALGO_ORDERS' | 'MAX_NUM_ICEBERG_ORDERS' | 'MAX_POSITION'>([
+    'PRICE_FILTER',
+    'PERCENT_PRICE',
+    'LOT_SIZE',
+    'MIN_NOTIONAL',
+    'ICEBERG_PARTS',
+    'MARKET_LOT_SIZE',
+    'MAX_NUM_ORDERS',
+    'MAX_NUM_ALGO_ORDERS',
+    'MAX_NUM_ICEBERG_ORDERS',
+    'MAX_POSITION',
+  ]);
+
+  switch (filterType) {
+    case 'PRICE_FILTER':
+      return {
+        filterType: filterType,
+        minPrice: randomNumber(1, 100).toString(),
+        maxPrice: randomNumber(1_000, 10_000).toString(),
+        tickSize: randomNumber(1, 4).toString(),
+      };
+    case 'PERCENT_PRICE':
+      return {
+        filterType: filterType,
+        multiplierUp: randomNumber(1, 100).toString(),
+        multiplierDown: randomNumber(1_000, 10_000).toString(),
+        avgPriceMins: randomNumber(1, 10),
+      };
+    case 'LOT_SIZE':
+    case 'MARKET_LOT_SIZE':
+      return {
+        filterType: filterType,
+        minQty: randomNumber(1, 100).toString(),
+        maxQty: randomNumber(1_000, 10_000).toString(),
+        stepSize: randomNumber(1, 4).toString(),
+      };
+    case 'MIN_NOTIONAL':
+      return {
+        filterType: filterType,
+        minNotional: randomNumber(1, 100).toString(),
+        applyToMarket: randomBoolean(),
+        avgPriceMins: randomNumber(1, 1_000).toString(),
+      };
+    case 'ICEBERG_PARTS':
+      return {
+        filterType: filterType,
+        limit: randomNumber(1, 100),
+      };
+    case 'MAX_NUM_ORDERS':
+      return {
+        filterType: filterType,
+        maxNumOrders: randomNumber(1, 100),
+      };
+    case 'MAX_NUM_ALGO_ORDERS':
+      return {
+        filterType: filterType,
+        maxNumAlgoOrders: randomNumber(1, 100),
+      };
+    case 'MAX_NUM_ICEBERG_ORDERS':
+      return {
+        filterType: filterType,
+        maxNumIcebergOrders: randomNumber(1, 100),
+      };
+    case 'MAX_POSITION':
+      return {
+        filterType: filterType,
+        maxPosition: randomNumber(1, 100).toString(),
+      };
+  }
 };

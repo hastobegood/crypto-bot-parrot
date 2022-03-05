@@ -19,7 +19,7 @@ import { ExecuteStrategyService } from '../code/domain/strategy/execute-strategy
 import { ExecuteStrategyEventScheduler } from '../code/application/strategy/execute-strategy-event-scheduler';
 
 const binanceAuthentication = new BinanceAuthentication(process.env.EXCHANGES_SECRET_NAME, smClient);
-const binanceClient = new Client(binanceAuthentication);
+const binanceClient = new Client({ apiInfoProvider: binanceAuthentication });
 
 const binanceTickerClient = new BinanceTickerClient(binanceClient);
 const tickerClient = new HttpTickerClient([binanceTickerClient]);
