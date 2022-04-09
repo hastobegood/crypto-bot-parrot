@@ -1233,21 +1233,21 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hastobegood/crypto-bot-artillery@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@hastobegood/crypto-bot-artillery/-/crypto-bot-artillery-0.9.0.tgz#906ea331628b7ec2a5cc498b9adc49555294f8e3"
-  integrity sha512-voNc32gjNM5C0UuXUwJ5jni5KBYMKc+ejWIrmfMBtOGIxOLGiUXI18cOsTToWtSVyZ78YJ6mG5FvoL7OMNcnNg==
+"@hastobegood/crypto-bot-artillery@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@hastobegood/crypto-bot-artillery/-/crypto-bot-artillery-0.10.0.tgz#89acdb9acad634e47d3d6a6404370848d4da0dec"
+  integrity sha512-wGMDHOok4eyzR3K3AyiqVyR9FgqgQulUghCqq2dYBuhJVkVYoRPoPZoMHP9CmTnZis7U0KTwisjst2dL9rD9Xw==
   dependencies:
-    "@hastobegood/crypto-clients-binance" "^0.5.0"
+    "@hastobegood/crypto-clients-binance" "^0.6.0"
     joi "^17.6.0"
-    pino "^7.8.1"
+    pino "^7.9.2"
 
-"@hastobegood/crypto-clients-binance@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@hastobegood/crypto-clients-binance/-/crypto-clients-binance-0.5.0.tgz#57aadd42c23371bac650aa98381f26f1b341dd06"
-  integrity sha512-SXCghYeQi7N/eFRBjT5sNQPv0EvKXrk30GE+IVM9Rp6HxzjN2m9rIN20xYf1a2dNpchA8l2ccrUsnMVrRFODvA==
+"@hastobegood/crypto-clients-binance@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@hastobegood/crypto-clients-binance/-/crypto-clients-binance-0.6.0.tgz#48fc003d37f7c0c465a3691d760759f6dbd02f3a"
+  integrity sha512-mYVsKpni6Tn4ijK04Vn6kNDT9O7Qg6rNjfSs28J7A+vLntaGQRlD+tqcEkq1cZ/oB4Z9DQgBQCbKHiYJPU+0AQ==
   dependencies:
-    axios "^0.26.0"
+    axios "^0.26.1"
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.2"
@@ -2175,10 +2175,10 @@ aws-xray-sdk-core@^3.3.4:
     cls-hooked "^4.2.2"
     semver "^5.3.0"
 
-axios@^0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.0.tgz#9a318f1c69ec108f8cd5f3c3d390366635e13928"
-  integrity sha512-lKoGLMYtHvFrPVt3r+RBMp9nh34N0M8zEfCWqdWZx6phynIEhQqAdydpyBAAG211zlhX9Rgu08cOamy6XjE5Og==
+axios@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
+  integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
   dependencies:
     follow-redirects "^1.14.8"
 
@@ -4179,11 +4179,12 @@ pino-std-serializers@^4.0.0:
   resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-4.0.0.tgz#1791ccd2539c091ae49ce9993205e2cd5dbba1e2"
   integrity sha512-cK0pekc1Kjy5w9V2/n+8MkZwusa6EyyxfeQCB799CQRhRt/CqYKiWs5adeu8Shve2ZNffvfC/7J64A2PJo1W/Q==
 
-pino@^7.8.1:
-  version "7.8.1"
-  resolved "https://registry.yarnpkg.com/pino/-/pino-7.8.1.tgz#f8a7b590a6f2321e2f23b91515763530efbd61bb"
-  integrity sha512-G0AVnaJBBtbdOpZ3z0/QD3R57BWwjVo4K7e+c5mHKjNCYIY1FIKuNlWjVJfCVQ4Bq6iN/yAAh5OCeeTI7OXosA==
+pino@^7.9.2:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-7.10.0.tgz#c621a3acf3b7aa50a6156c1b3989d1703666b2b1"
+  integrity sha512-T6R92jy/APDElEuOk0gqa4nds3ZgqFbHde2X0g8XorlyPlVGlr9T5KQphtp72a3ByKOdZMg/gM/0IprpGQfTWg==
   dependencies:
+    atomic-sleep "^1.0.0"
     fast-redact "^3.0.0"
     on-exit-leak-free "^0.2.0"
     pino-abstract-transport v0.5.0
@@ -4193,7 +4194,7 @@ pino@^7.8.1:
     real-require "^0.1.0"
     safe-stable-stringify "^2.1.0"
     sonic-boom "^2.2.1"
-    thread-stream "^0.13.0"
+    thread-stream "^0.15.1"
 
 pirates@^4.0.4:
   version "4.0.4"
@@ -4698,10 +4699,10 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-thread-stream@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/thread-stream/-/thread-stream-0.13.0.tgz#c68054bdea250c5d8d400caa3233a150d5461cca"
-  integrity sha512-kTMZeX4Dzlb1zZ00/01aerGaTw2i8NE4sWF0TvF1uXewRhCiUjCvatQkvxIvFqauWG2ADFS2Wpd3qBeYL9i3dg==
+thread-stream@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/thread-stream/-/thread-stream-0.15.1.tgz#5aba24a35aa5e9e4eb66173826443d7167b34b07"
+  integrity sha512-SCnuIT27gc2h/F/RY2peuC7brgLy+1oXU+7yOIAITz1z5stDpXCF5rAoFcykjuK6ifbTlKAHL7Ccq8oc5Btv1w==
   dependencies:
     real-require "^0.1.0"
 
