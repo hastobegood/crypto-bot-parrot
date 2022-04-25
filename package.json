@@ -22,7 +22,7 @@
     "deploy:prod": "sam build && sam deploy --config-env prod --tags Environment=prod Application=CryptoBotParrot"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.67.0",
+    "@aws-sdk/client-dynamodb": "^3.76.0",
     "@aws-sdk/client-secrets-manager": "^3.67.0",
     "@aws-sdk/lib-dynamodb": "^3.67.0",
     "@hastobegood/crypto-bot-artillery": "^0.12.0",
