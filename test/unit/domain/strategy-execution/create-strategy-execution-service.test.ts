@@ -1,8 +1,9 @@
 import MockDate from 'mockdate';
-import { CreateStrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
-import { buildDefaultCreateStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
-import { StrategyExecutionRepository } from '../../../../src/code/domain/strategy-execution/strategy-execution-repository';
+
 import { CreateStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/create-strategy-execution-service';
+import { CreateStrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
+import { StrategyExecutionRepository } from '../../../../src/code/domain/strategy-execution/strategy-execution-repository';
+import { buildDefaultCreateStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
 
 jest.mock('uuid', () => {
   return {

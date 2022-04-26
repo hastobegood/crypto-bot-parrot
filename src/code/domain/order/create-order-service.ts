@@ -1,5 +1,6 @@
 import { logger } from '@hastobegood/crypto-bot-artillery/common';
 import { Order, SendOrder, SendOrderClient } from '@hastobegood/crypto-bot-artillery/order';
+
 import { CreateOrder } from './model/order';
 
 export class CreateOrderService {

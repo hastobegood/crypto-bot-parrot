@@ -1,12 +1,13 @@
 import { Order } from '@hastobegood/crypto-bot-artillery/order';
-import { GetStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/get-strategy-execution-service';
+
 import { CreateOrderService } from '../../../../src/code/domain/order/create-order-service';
 import { CreateStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/create-strategy-execution-service';
+import { GetStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/get-strategy-execution-service';
+import { StrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
 import { ExecuteStrategyService } from '../../../../src/code/domain/strategy/execute-strategy-service';
 import { Strategy } from '../../../../src/code/domain/strategy/model/strategy';
-import { buildDefaultStrategy } from '../../../builders/domain/strategy/strategy-test-builder';
-import { StrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
 import { buildDefaultStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
+import { buildDefaultStrategy } from '../../../builders/domain/strategy/strategy-test-builder';
 
 const createOrderServiceMock = jest.mocked(jest.genMockFromModule<CreateOrderService>('../../../../src/code/domain/order/create-order-service'), true);
 const getStrategyExecutionServiceMock = jest.mocked(jest.genMockFromModule<GetStrategyExecutionService>('../../../../src/code/domain/strategy-execution/get-strategy-execution-service'), true);

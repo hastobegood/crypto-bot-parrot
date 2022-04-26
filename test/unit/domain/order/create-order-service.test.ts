@@ -1,8 +1,9 @@
 import { Order, SendOrderClient } from '@hastobegood/crypto-bot-artillery/order';
 import { buildDefaultMarketOrder } from '@hastobegood/crypto-bot-artillery/test/builders';
+
+import { CreateOrderService } from '../../../../src/code/domain/order/create-order-service';
 import { CreateOrder } from '../../../../src/code/domain/order/model/order';
 import { buildDefaultCreateOrder } from '../../../builders/domain/order/order-test-builder';
-import { CreateOrderService } from '../../../../src/code/domain/order/create-order-service';
 
 const sendOrderClientMock = jest.mocked(jest.genMockFromModule<SendOrderClient>('@hastobegood/crypto-bot-artillery'), true);
 

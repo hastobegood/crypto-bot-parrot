@@ -1,6 +1,7 @@
 import { logger } from '@hastobegood/crypto-bot-artillery/common';
-import { Strategy } from '../../domain/strategy/model/strategy';
+
 import { ExecuteStrategyService } from '../../domain/strategy/execute-strategy-service';
+import { Strategy } from '../../domain/strategy/model/strategy';
 
 export class ExecuteStrategyEventScheduler {
   constructor(private executeStrategyService: ExecuteStrategyService, private strategy: Strategy) {}

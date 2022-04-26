@@ -1,5 +1,6 @@
-import { v4 } from 'uuid';
 import { randomBoolean, randomNumber, randomString, randomSymbol } from '@hastobegood/crypto-bot-artillery/test/builders';
+import { v4 } from 'uuid';
+
 import { CreateStrategyExecution, StrategyExecution, StrategyExecutionOrder } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
 
 export const buildDefaultCreateStrategyExecution = (): CreateStrategyExecution => {

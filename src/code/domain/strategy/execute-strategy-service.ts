@@ -1,10 +1,12 @@
 import { extractAssets } from '@hastobegood/crypto-bot-artillery/common';
 import { Order } from '@hastobegood/crypto-bot-artillery/order';
-import { CreateOrder } from '../order/model/order';
+
 import { CreateOrderService } from '../order/create-order-service';
-import { CreateStrategyExecution, StrategyExecution, StrategyExecutionOrder } from '../strategy-execution/model/strategy-execution';
-import { GetStrategyExecutionService } from '../strategy-execution/get-strategy-execution-service';
+import { CreateOrder } from '../order/model/order';
 import { CreateStrategyExecutionService } from '../strategy-execution/create-strategy-execution-service';
+import { GetStrategyExecutionService } from '../strategy-execution/get-strategy-execution-service';
+import { CreateStrategyExecution, StrategyExecution, StrategyExecutionOrder } from '../strategy-execution/model/strategy-execution';
+
 import { Strategy, StrategyExchange } from './model/strategy';
 
 export class ExecuteStrategyService {
