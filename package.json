@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "^14"
+    "node": "14"
   },
   "type": "module",
   "scripts": {
@@ -34,7 +34,7 @@
     "@types/aws-lambda": "^8.10.95",
     "@types/copy-webpack-plugin": "^10.1.0",
     "@types/jest": "^27.4.1",
-    "@types/node": "14.x",
+    "@types/node": "14",
     "@types/randomstring": "^1.1.8",
     "@types/source-map-support": "^0.5.4",
     "@types/uuid": "^8.3.4",
