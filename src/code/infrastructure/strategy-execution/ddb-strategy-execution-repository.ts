@@ -1,4 +1,5 @@
 import { BatchWriteCommand, BatchWriteCommandInput, DynamoDBDocumentClient, GetCommand, GetCommandInput } from '@aws-sdk/lib-dynamodb';
+
 import { StrategyExecution, StrategyExecutionOrder } from '../../domain/strategy-execution/model/strategy-execution';
 import { StrategyExecutionRepository } from '../../domain/strategy-execution/strategy-execution-repository';
 

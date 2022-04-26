@@ -1,4 +1,5 @@
 import { randomAsset, randomFromList, randomNumber, randomPercentage, randomSymbol } from '@hastobegood/crypto-bot-artillery/test/builders';
+
 import { Strategy, StrategyAsset } from '../../../../src/code/domain/strategy/model/strategy';
 
 export const buildDefaultStrategy = (): Strategy => {

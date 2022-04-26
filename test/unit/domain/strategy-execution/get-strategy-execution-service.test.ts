@@ -1,7 +1,7 @@
-import { StrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
-import { buildDefaultStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
-import { StrategyExecutionRepository } from '../../../../src/code/domain/strategy-execution/strategy-execution-repository';
 import { GetStrategyExecutionService } from '../../../../src/code/domain/strategy-execution/get-strategy-execution-service';
+import { StrategyExecution } from '../../../../src/code/domain/strategy-execution/model/strategy-execution';
+import { StrategyExecutionRepository } from '../../../../src/code/domain/strategy-execution/strategy-execution-repository';
+import { buildDefaultStrategyExecution } from '../../../builders/domain/strategy-execution/strategy-execution-test-builder';
 
 const strategyExecutionRepositoryMock = jest.mocked(jest.genMockFromModule<StrategyExecutionRepository>('../../../../src/code/domain/strategy-execution/strategy-execution-repository'), true);
 
