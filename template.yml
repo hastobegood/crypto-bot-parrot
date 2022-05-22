@@ -41,7 +41,7 @@ Mappings:
       Strategy: '{ "exchange": "Binance", "symbol": "BTC#BUSD", "quantity": 50, "assets": [ { "asset": "ETH|BNB", "percentage": 0.50 } ] }'
       StrategySchedule: cron(0 18 ? * * *)
     prod:
-      Strategy: '{ "exchange": "Binance", "symbol": "BTC#EUR", "quantity": 25, "assets": [ { "asset": "ETH", "percentage": 0.26 }, { "asset": "ADA|MATIC", "percentage": 0.24 }, { "asset": "AVAX|EGLD|SOL", "percentage": 0.24 } ] }'
+      Strategy: '{ "exchange": "Binance", "symbol": "BTC#EUR", "quantity": 25, "assets": [ { "asset": "ETH", "percentage": 0.26 }, { "asset": "ADA|BNB|MATIC", "percentage": 0.24 }, { "asset": "AVAX|EGLD|SOL", "percentage": 0.24 } ] }'
       StrategySchedule: cron(0 18 ? * 1 *)
 
 Globals:
