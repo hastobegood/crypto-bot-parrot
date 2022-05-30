@@ -1,4 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
+
 Description: >-
   crypto-bot-parrot
 
@@ -46,7 +47,7 @@ Mappings:
 
 Globals:
   Function:
-    Runtime: nodejs14.x
+    Runtime: nodejs16.x
     MemorySize: 128
     Timeout: 30
     AutoPublishAlias: Live
@@ -63,8 +64,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Description: Execute strategy function
-      CodeUri: dist/webpack/execute-strategy-handler
-      Handler: app.handler
+      CodeUri: src/handlers
+      Handler: execute-strategy-handler.handler
       ReservedConcurrentExecutions: 1
       Environment:
         Variables:
@@ -90,6 +91,14 @@ Resources:
             TableName: !Ref StrategyTable
         - DynamoDBWritePolicy:
             TableName: !Ref StrategyTable
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Target: es2021
+        Minify: true
+        SourceMap: true
+        EntryPoints:
+          - execute-strategy-handler.ts
 
   StrategyTable:
     Type: AWS::DynamoDB::Table
