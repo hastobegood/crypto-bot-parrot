@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.97",
-    "@types/jest": "^27.5.1",
+    "@types/jest": "^27.5.2",
     "@types/node": "16",
     "@types/randomstring": "^1.1.8",
     "@types/source-map-support": "^0.5.4",
